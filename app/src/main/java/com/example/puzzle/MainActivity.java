@@ -2,6 +2,10 @@ package com.example.puzzle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.puzzle.Model.No;
 import com.example.puzzle.Model.Num;
@@ -15,21 +19,34 @@ public class MainActivity extends AppCompatActivity {
     Num[] arrayNumbers = new Num [9];
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initialNode.setState(initialState);
-        printState(initialNode.getState());
+    printState(initialNode.getState());
 
-        int positionZero[] = findZero((initialNode.getState()));
+    final ImageView img = (ImageView) findViewById(R.id.seis);
+        img.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+            ViewGroup.LayoutParams layParamsGet= img.getLayoutParams();
+            int b=layParamsGet.height;
+            int a=layParamsGet.width;
+            img.setTranslationX(b);
+            Toast.makeText(MainActivity.this, "seis"+a+" "+b, Toast.LENGTH_SHORT).show();
+        }
+    });
+
+
+    int positionZero[] = findZero((initialNode.getState()));
 
         System.out.println("X = "+positionZero[0]+"Y = "+positionZero[1]);
 
-        makeCoordinates(initialState, arrayNumbers);
+    makeCoordinates(initialState, arrayNumbers);
 
-    }
+}
 
     public int distanceOfManhattam(Num[] arrayNumbers, int [][] state){
         int total = 0;
