@@ -92,6 +92,7 @@
         android:id="@+id/seis"
         android:layout_width="133dp"
         android:layout_height="166dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/seis" />
