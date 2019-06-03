@@ -10,6 +10,9 @@ import android.widget.Toast;
 import com.example.puzzle.Model.No;
 import com.example.puzzle.Model.Num;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
     public int [][] solution = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
 
@@ -17,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     int [][] initialState = new int[][] {{4,1,3},{2,6,8},{7,5,0}};
 
     Num[] arrayNumbers = new Num [9];
-
+    int stepsForSoluction =0;
 
 
     @Override
@@ -45,8 +48,164 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("X = "+positionZero[0]+"Y = "+positionZero[1]);
 
     makeCoordinates(initialState, arrayNumbers);
+    findSoluction(initialNode, solution, arrayNumbers);
 
 }
+
+    public void findSoluction(No initialState, int [][] soluction, Num[] arrayNumbers){
+        ArrayList<No> openStates = new ArrayList<>();
+        openStates.add(initialState);
+        ArrayList <String> checkedStates = new ArrayList();
+        int counter =0;
+
+        while(openStates.size()!=0){
+            counter++;
+
+            Collections.sort(openStates);
+            No no = openStates.remove(0);
+            checkedStates.add(hashMatrix(no.getState()));
+
+            if(compareMatriz(no.getState(), soluction)){
+                System.out.println("Soluction Found!");
+                printSoluction(no);
+                System.out.println("Steps: "+stepsForSoluction);
+                break;
+            }
+
+
+            int [] localizationOfZero = findZero(no.getState());
+
+            //Generating states and adding to the open states if it has not been opened yet.
+
+            if(localizationOfZero[0] !=0){
+
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(up(childNode.getState()));
+
+
+                if(checkedStates.contains(hashMatrix(childNode.getState())) != true){
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    openStates.add(childNode);
+                }
+            }
+
+
+            if(localizationOfZero[0] !=2) {
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(down(childNode.getState()));
+
+
+                if(checkedStates.contains(hashMatrix(childNode.getState()))!= true){
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    openStates.add(childNode);
+                }
+            }
+
+
+
+
+            if(localizationOfZero[1] !=0) {
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(left(childNode.getState()));
+
+
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    openStates.add(childNode);
+                }
+
+            }
+
+
+            if(localizationOfZero[1] !=2) {
+
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(right(childNode.getState()));
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    openStates.add(childNode);
+                }
+
+            }
+
+
+
+        }
+    }
+
+    public boolean compareMatriz(int[][]matriz, int[][]solution){
+        for(int i =0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(matriz[i][j]!=solution[i][j])
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public String hashMatrix(int [][] matriz){
+        String hash = "";
+        for(int i =0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                hash += matriz[i][j];
+            }
+        }
+        return hash;
+    }
+
+    public int[][] copyState(int[][] matriz){
+        int[][] temp = new int [3][3];
+        for(int i =0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                temp[i][j] = matriz[i][j];
+            }
+        }
+        return temp;
+    }
+
+    public int[][] right(int[][] matriz){
+        int [] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]][positionZero[1]+1];
+        matriz[positionZero[0]][positionZero[1]+1] = 0;
+        return matriz;
+    }
+
+    public int[][] left(int[][] matriz){
+        int [] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]][positionZero[1]-1];
+        matriz[positionZero[0]][positionZero[1]-1] = 0;
+        return matriz;
+    }
+
+
+    public int[][] up(int[][] matriz) {
+        int[] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]-1][positionZero[1]];
+        matriz[positionZero[0]-1][positionZero[1]] = 0;
+        return matriz;
+    }
+
+    public int[][] down(int[][] matriz) {
+        int[] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]+1][positionZero[1]];
+        matriz[positionZero[0]+1][positionZero[1]] = 0;
+        return matriz;
+    }
+
+    public void printSoluction(No no){
+        stepsForSoluction+=1;
+        if(no.getPredecessor()!= null)
+            printSoluction(no.getPredecessor());
+        printState(no.getState());
+    }
 
     public int distanceOfManhattam(Num[] arrayNumbers, int [][] state){
         int total = 0;
