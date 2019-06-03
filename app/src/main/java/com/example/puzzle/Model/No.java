@@ -1,10 +1,16 @@
 package com.example.puzzle.Model;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
-public class No {
+public class No implements Comparable<No>{
+
     private No predecessor = null;
     private int  [][] state;
+    private int distanceOfManhattam;
+
+
+
 
     public int[][] getState() {
         return state;
@@ -13,8 +19,6 @@ public class No {
     public void setState(int[][] state) {
         this.state = state;
     }
-
-    private int distanceOfManhattam;
 
 
     public No getPredecessor() {
@@ -34,4 +38,14 @@ public class No {
         this.distanceOfManhattam = distanceOfManhattam;
     }
 
+    @Override
+    public int compareTo(No no) {
+        if (this.distanceOfManhattam < no.getDistanceOfManhattam()) {
+            return -1;
+        }
+        if (this.distanceOfManhattam > no.getDistanceOfManhattam()) {
+            return 1;
+        }
+        return 0;
+    }
 }
