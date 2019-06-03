@@ -8,6 +8,9 @@ import com.example.puzzle.Model.Num;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     public int [][] solution = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
@@ -34,27 +37,17 @@ public class MainActivity extends AppCompatActivity {
     public void findSoluction(No initialState, int [][] soluction, Num[] arrayNumbers){
         ArrayList<No> openStates = new ArrayList<>();
         openStates.add(initialState);
-        ArrayList<int [][]> checkedStates = new ArrayList<>();
+        ArrayList <String> checkedStates = new ArrayList();
         int counter =0;
 
         while(openStates.size()!=0){
             counter++;
 
-            if(counter == 500)
-                break;
             Collections.sort(openStates);
-            for(int i =0; i < openStates.size(); i++){
-                System.out.print(openStates.get(i).getDistanceOfManhattam()+" ");
-            }
-            System.out.println("\n===========================================");
             No no = openStates.remove(0);
-            System.out.println("===========================================");
-            printState(no.getState());
-            System.out.println("counter: "+counter+"tamanho do checked: "+checkedStates.size());
-            checkedStates.add(no.getState());
+            checkedStates.add(hashMatrix(no.getState()));
 
-            if(no.getState() == soluction){
-                System.out.println("ENCONTROU A SOLUCAO=========================================");
+            if(compareMatriz(no.getState(), soluction)){
                 System.out.println("Soluction Found!");
                 printSoluction(no);
                 System.out.println("Steps: "+stepsForSoluction);
@@ -71,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 No childNode = new No();
                 childNode.setState(copyState(no.getState()));
                 childNode.setState(up(childNode.getState()));
-                if(checkedStates.contains(childNode.getState())==false){
-                    //System.out.println("ENTROU CONTAINS ====================================");
+
+
+                if(checkedStates.contains(hashMatrix(childNode.getState())) != true){
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
                     openStates.add(childNode);
@@ -85,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 childNode.setState(copyState(no.getState()));
                 childNode.setState(down(childNode.getState()));
 
-                if(checkedStates.contains(childNode.getState())==false){
-                    //System.out.println("ENTROU CONTAINS ====================================");
+
+                if(checkedStates.contains(hashMatrix(childNode.getState()))!= true){
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
                     openStates.add(childNode);
@@ -101,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 childNode.setState(copyState(no.getState()));
                 childNode.setState(left(childNode.getState()));
 
-                if (checkedStates.contains(childNode.getState())==false) {
-                    //System.out.println("ENTROU CONTAINS ====================================");
+
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
                     openStates.add(childNode);
@@ -115,9 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 No childNode = new No();
                 childNode.setState(copyState(no.getState()));
                 childNode.setState(right(childNode.getState()));
-
-                if (checkedStates.contains(childNode.getState())==false) {
-                    //System.out.println("ENTROU CONTAINS ====================================");
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
                     openStates.add(childNode);
@@ -129,6 +121,27 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    public boolean compareMatriz(int[][]matriz, int[][]solution){
+        for(int i =0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(matriz[i][j]!=solution[i][j])
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public String hashMatrix(int [][] matriz){
+        String hash = "";
+        for(int i =0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                hash += matriz[i][j];
+            }
+        }
+        return hash;
+    }
+
     public int[][] copyState(int[][] matriz){
         int[][] temp = new int [3][3];
         for(int i =0; i < 3; i++){
@@ -202,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
             }
             System.out.println("");
         }
+        System.out.println("\n------------------------");
     }
 
     /*Recebe uma Matriz e retorna as coordenadas do nó Zero*/
