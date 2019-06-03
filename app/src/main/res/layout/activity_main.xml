@@ -6,13 +6,122 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/dois"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="266dp"
+        android:layout_marginLeft="266dp"
+        android:layout_marginBottom="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/dois" />
+
+    <ImageView
+        android:id="@+id/cinco"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="266dp"
+        android:layout_marginLeft="266dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/cinco" />
+
+    <ImageView
+        android:id="@+id/oito"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="266dp"
+        android:layout_marginLeft="266dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/oito" />
+
+    <ImageView
+        android:id="@+id/um"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginBottom="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/um" />
+
+    <ImageView
+        android:id="@+id/quatro"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/quatro" />
+
+    <ImageView
+        android:id="@+id/sete"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/sete" />
+
+    <ImageView
+        android:id="@+id/tres"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginBottom="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/tres" />
+
+    <ImageView
+        android:id="@+id/zero"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        android:layout_marginBottom="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/zero" />
+
+    <ImageView
+        android:id="@+id/seis"
+        android:layout_width="133dp"
+        android:layout_height="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/seis" />
+
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Embaralhar"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="66dp"
+        android:text="tirarFoto"
+        app:layout_constraintBottom_toTopOf="@+id/um"
+        app:layout_constraintEnd_toStartOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:text="Solucionar"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
