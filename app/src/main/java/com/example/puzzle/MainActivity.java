@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public int [][] solution = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
 
     No initialNode = new No();
-    int [][] initialState = new int[][] {{4,1,3},{2,6,8},{7,5,0}};
+    int [][] initialState = new int[][] {{2,3,0},{1,8,6},{5,7,4}};
 
     Num[] arrayNumbers = new Num [9];
     int stepsForSoluction =0;
@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
             }
             System.out.println("");
         }
+        System.out.println("\n=====================================");
     }
 
     /*Recebe uma Matriz e retorna as coordenadas do valor Zero*/
