@@ -8,6 +8,7 @@ public class No implements Comparable<No>{
     private No predecessor = null;
     private int  [][] state;
     private int distanceOfManhattam;
+    private String orientation;
 
 
 
@@ -36,6 +37,15 @@ public class No implements Comparable<No>{
 
     public void setDistanceOfManhattam(int distanceOfManhattam) {
         this.distanceOfManhattam = distanceOfManhattam;
+    }
+
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
     }
 
     @Override

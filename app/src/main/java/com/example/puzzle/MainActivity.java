@@ -16,6 +16,9 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity {
     public int [][] solution = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
 
+    //stores a sequence of strings for the solution. Ex: "up", "down", "left", "right"
+    //By default the first position is null.
+    public ArrayList<String> wayToSolve = new ArrayList<>();
     No initialNode = new No();
     int [][] initialState = new int[][] {{2,3,0},{1,8,6},{5,7,4}};
 
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initialNode.setState(initialState);
-    printState(initialNode.getState());
+     printState(initialNode.getState());
 
     final ImageView img = (ImageView) findViewById(R.id.seis);
         img.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 if(checkedStates.contains(hashMatrix(childNode.getState())) != true){
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
+                    childNode.setOrientation("up");
                     openStates.add(childNode);
                 }
             }
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 if(checkedStates.contains(hashMatrix(childNode.getState()))!= true){
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
+                    childNode.setOrientation("down");
                     openStates.add(childNode);
                 }
             }
@@ -117,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
+                    childNode.setOrientation("left");
                     openStates.add(childNode);
                 }
 
@@ -131,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
                     childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
                     childNode.setPredecessor(no);
+                    childNode.setOrientation("right");
                     openStates.add(childNode);
                 }
 
@@ -204,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
         stepsForSoluction+=1;
         if(no.getPredecessor()!= null)
             printSoluction(no.getPredecessor());
+        wayToSolve.add(no.getOrientation());
+        System.out.println(no.getOrientation());
         printState(no.getState());
     }
 
