@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Puzzle</string>
+    <string name="button_new">Novo Jogo</string>
+    <string name="button_solve">Resolva</string>
+    <string name="moves_value">Comece o jogo!</string>
+    <string name="game_message">Clique para jogar</string>
 </resources>

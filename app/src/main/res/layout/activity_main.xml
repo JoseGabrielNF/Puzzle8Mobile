@@ -1,128 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/dois"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="266dp"
-        android:layout_marginLeft="266dp"
-        android:layout_marginBottom="332dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/dois" />
-
-    <ImageView
-        android:id="@+id/cinco"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="266dp"
-        android:layout_marginLeft="266dp"
-        android:layout_marginBottom="166dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/cinco" />
-
-    <ImageView
-        android:id="@+id/oito"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="266dp"
-        android:layout_marginLeft="266dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/oito" />
-
-    <ImageView
-        android:id="@+id/um"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="133dp"
-        android:layout_marginLeft="133dp"
-        android:layout_marginBottom="332dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/um" />
-
-    <ImageView
-        android:id="@+id/quatro"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="133dp"
-        android:layout_marginLeft="133dp"
-        android:layout_marginBottom="166dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/quatro" />
-
-    <ImageView
-        android:id="@+id/sete"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginLeft="132dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/sete" />
-
-    <ImageView
-        android:id="@+id/tres"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginBottom="166dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/tres" />
-
-    <ImageView
-        android:id="@+id/zero"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:layout_marginBottom="332dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/zero" />
-
-    <ImageView
-        android:id="@+id/seis"
-        android:layout_width="133dp"
-        android:layout_height="166dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/seis" />
-
-    <Button
-        android:id="@+id/button"
+    <TextView android:id="@+id/message"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:text="@string/game_message"
+        android:padding="5dp"	  />
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Embaralhar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/game"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:background="#cccccc"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:id="@+id/moves"
+            android:padding="10dp"
+            android:text="@string/moves_value"/>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="66dp"
-        android:text="tirarFoto"
-        app:layout_constraintBottom_toTopOf="@+id/um"
-        app:layout_constraintEnd_toStartOf="@+id/button4" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:text="Solucionar"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        <Button android:id="@+id/button_new"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:textSize="30sp"
+            android:text="@string/button_new"
+            android:onClick="newGame" />
+    </LinearLayout>
+</RelativeLayout>
