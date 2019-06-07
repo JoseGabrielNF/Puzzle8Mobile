@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure that you want to start a new game? You will lose your current progress").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+            builder.setMessage("Você tem certeza que quer iniciar um novo jogo? Você perderá o atual").setPositiveButton("Sim", dialogClickListener)
+                    .setNegativeButton("Não", dialogClickListener).show();
 
         } else {
             ViewGroup n_view = (ViewGroup) findViewById(R.id.game);
@@ -145,9 +145,9 @@ public class MainActivity extends AppCompatActivity {
             checkedStates.add(hashMatrix(no.getState()));
 
             if(compareMatriz(no.getState(), soluction)){
-                System.out.println("Soluction Found!");
+                System.out.println("Você Venceu!");
                 printSoluction(no);
-                System.out.println("Steps: "+stepsForSoluction);
+                System.out.println("Movimentos: "+stepsForSoluction);
                 break;
             }
 

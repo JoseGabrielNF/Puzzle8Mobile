@@ -34,13 +34,23 @@
             android:padding="10dp"
             android:text="@string/moves_value"/>
 
-        <Button android:id="@+id/button_new"
-            android:layout_width="fill_parent"
-            android:layout_height="75dp"
-            android:textAllCaps="false"
-            android:textStyle="normal"
-            android:textSize="30sp"
+        <Button
+            android:id="@+id/button_new"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="newGame"
             android:text="@string/button_new"
-            android:onClick="newGame" />
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/button_solve"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
     </LinearLayout>
 </RelativeLayout>
