@@ -37,7 +37,7 @@
         <Button
             android:id="@+id/button_new"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:onClick="newGame"
             android:text="@string/button_new"
             android:textAllCaps="false"
@@ -47,7 +47,7 @@
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="@string/button_solve"
             android:textAllCaps="false"
             android:textSize="20sp" />
