@@ -35,10 +35,13 @@ public class GameView extends View {
 
     }
 
+    public void solve(){
+        board.solve();
+    }
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-
+        System.out.println("entrou on touch event");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 return true;

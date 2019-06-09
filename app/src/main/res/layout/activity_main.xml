@@ -45,9 +45,10 @@
             android:textStyle="normal" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_solve"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="solveGame"
             android:text="@string/button_solve"
             android:textAllCaps="false"
             android:textSize="20sp" />

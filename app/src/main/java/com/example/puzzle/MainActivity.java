@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.puzzle.Model.No;
@@ -25,38 +26,20 @@ public class MainActivity extends AppCompatActivity {
 
     //stores a sequence of strings for the solution. Ex: "up", "down", "left", "right"
     //By default the first position is null.
-   /* public int [][] solution = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
-    public ArrayList<String> wayToSolve = new ArrayList<>();
-    No initialNode = new No();
-    int [][] initialStateHere = GameBoard.initialState;
-    Num[] arrayNumbers = new Num [9];
-    int stepsForSoluction =0;*/
 
     GameView.GameViewActionListener listener;
+    Button btnSolve;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnSolve = (Button) findViewById(R.id.button_solve);
 
         createListener();
         drawBoard();
 
-        //quando clicar em resolver chamo essa funcao
-        //initialNode.setState(initialStateHere);
-        //printState(initialNode.getState());
-
-        //pegar a matriz iniciar e substituir no initialState
-        /*for(int i = 0; i < initialStateHere.length; i++){
-            for (int j = 0; j< initialStateHere.length;j++){
-                System.out.println("aqui " + "linha "+ i + " coluna"+  j + " " + initialStateHere[i][j]);
-            }
-        }*/
-
-
-        // makeCoordinates(initialState, arrayNumbers);
-        // findSoluction(initialNode, solution, arrayNumbers);
 
     }
 
@@ -124,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
             View gameView = new GameView(this, null, listener);
             n_view.addView(gameView);
         }
+    }
+
+    public void solveGame(View view){
+
     }
 
 
