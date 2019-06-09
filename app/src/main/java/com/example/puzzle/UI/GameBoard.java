@@ -3,7 +3,13 @@ package com.example.puzzle.UI;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import com.example.puzzle.Model.No;
+import com.example.puzzle.Model.Num;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 
 public class GameBoard {
@@ -14,6 +20,15 @@ public class GameBoard {
     private Context context;
     private Cell[] cells;
     private Canvas canvas;
+
+
+    public int [][] initialState = new int[][] {{1,2,3},{4,5,6},{7,8,0}};
+    public int [][] soluction = new int [][] {{1,2,3},{4,5,6},{7,8,0}};
+    int stepsForSoluction =0;
+    public ArrayList<String> wayToSolve = new ArrayList<>();
+    No initialNode = new No();
+    Num[] arrayNumbers = new Num [9];
+    private Thread t1;
 
     GameBoard(Context context) {
         this.context = context;
@@ -41,6 +56,8 @@ public class GameBoard {
         int count;
         Boolean[] checkArray = new Boolean[10];
         Arrays.fill(checkArray, false);
+
+
 
         Random random = new Random();
 
@@ -78,21 +95,49 @@ public class GameBoard {
             for (int j = 0; j<size;j++)
             {
                 cells[cellNum(i,j)].changeState(board_template[cellNum(i, j)]);
-                //System.out.println("aqui " + "linha"+ i + "colna"+  j + " " + board_template[cellNum(i,j)]);
+                initialState[j][i] = board_template[cellNum(i,j)];
+
             }
         }
 
-        print(board_template);
+        solve();
 
     }
 
-    public void print(int [] board_template){
+    // Modifico o initialState a cada movimento que o jogador faz para jogar na IA com o botao Resolva com a matriz atualizada
+    public void changeInitialState(){
+        int k = 0;
         for(int i = 0; i <size; i++){
             for (int j = 0; j<size;j++)
             {
-                System.out.println("aqui " + "coluna "+ i + " linha"+  j + " " + board_template[cellNum(i,j)]);
+                initialState[i][j] = cells[k].returnNumber();
+                k++;
             }
         }
+    }
+
+    public int getNMoves(){
+        return this.stepsForSoluction;
+    }
+
+    public void solve(){
+        initialNode.setState(initialState);
+        makeCoordinates(soluction, arrayNumbers);
+        findSoluction(initialNode, soluction, arrayNumbers);
+
+        System.out.println("Steps for sol " + stepsForSoluction);
+
+        /*Iterator it = wayToSolve.iterator();
+        while (it.hasNext()) {
+            System.out.println("passos: "+ it.next());
+        }
+
+        try{
+                    t1.sleep(3000);
+                }catch (InterruptedException e ){
+                    System.out.println("acordei");
+                }
+        */
     }
 
 
@@ -133,48 +178,54 @@ public class GameBoard {
 
         int cellNumber = cellNum(i, j);
         int temp = Math.abs(cellNum(i + 1, j));
+        System.out.println("temp direita" + temp + "i " + i + " j " + j);
+        //Movimento para direita
         if(i!=2) {
-
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
+                    changeInitialState();
                     return true;
                 }
             }
         }
-
+        //Movimento esquerda
         if(i!=0) {
             temp = Math.abs(cellNum(i - 1, j));
-
+            System.out.println("temp esquerda" + temp);
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
+                    changeInitialState();
                     return true;
                 }
             }
         }
-
+        //Movimento para baixo
         if(j!=2) {
             temp = Math.abs(cellNum(i, j + 1));
-
+            System.out.println("temp baixo" + temp);
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
+                    changeInitialState();
                     return true;
                 }
             }
         }
-
+        //Movimento para cima
         if(j!=0) {
             temp = Math.abs(cellNum(i, j - 1));
+            System.out.println("temp cima" + temp);
 
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
+                    changeInitialState();
                     return true;
                 }
             }
@@ -206,5 +257,212 @@ public class GameBoard {
         }
 
         return inversions % 2 == 0;
+    }
+
+    //IA
+
+    public void findSoluction(No initialState, int [][] soluction, Num[] arrayNumbers){
+        ArrayList<No> openStates = new ArrayList<>();
+        openStates.add(initialState);
+        ArrayList <String> checkedStates = new ArrayList();
+        int counter =0;
+
+        while(openStates.size()!=0){
+            counter++;
+            System.out.println("contador" + counter);
+            Collections.sort(openStates);
+            No no = openStates.remove(0);
+            checkedStates.add(hashMatrix(no.getState()));
+
+            if(compareMatriz(no.getState(), soluction)){
+                //System.out.println("Você Venceu!");
+                printSoluction(no);
+                System.out.println("Movimentos: "+stepsForSoluction);
+                break;
+            }
+
+
+            int [] localizationOfZero = findZero(no.getState());
+
+            //Generating states and adding to the open states if it has not been opened yet.
+
+            if(localizationOfZero[0] !=0){
+
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(up(childNode.getState()));
+
+
+                if(checkedStates.contains(hashMatrix(childNode.getState())) != true){
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    childNode.setOrientation("up");
+                    openStates.add(childNode);
+                }
+            }
+
+
+            if(localizationOfZero[0] !=2) {
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(down(childNode.getState()));
+
+
+                if(checkedStates.contains(hashMatrix(childNode.getState()))!= true){
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    childNode.setOrientation("down");
+                    openStates.add(childNode);
+                }
+            }
+
+
+
+
+            if(localizationOfZero[1] !=0) {
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(left(childNode.getState()));
+
+
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    childNode.setOrientation("left");
+                    openStates.add(childNode);
+                }
+
+            }
+
+
+            if(localizationOfZero[1] !=2) {
+
+                No childNode = new No();
+                childNode.setState(copyState(no.getState()));
+                childNode.setState(right(childNode.getState()));
+                if (checkedStates.contains(hashMatrix(childNode.getState()))!= true) {
+                    childNode.setDistanceOfManhattam(distanceOfManhattam(arrayNumbers, childNode.getState()));
+                    childNode.setPredecessor(no);
+                    childNode.setOrientation("right");
+                    openStates.add(childNode);
+                }
+
+            }
+
+
+
+        }
+    }
+
+    public boolean compareMatriz(int[][]matriz, int[][]solution){
+        for(int i =0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(matriz[i][j]!=solution[i][j])
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public String hashMatrix(int [][] matriz){
+        String hash = "";
+        for(int i =0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                hash += matriz[i][j];
+            }
+        }
+        return hash;
+    }
+
+    public int[][] copyState(int[][] matriz){
+        int[][] temp = new int [3][3];
+        for(int i =0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                temp[i][j] = matriz[i][j];
+            }
+        }
+        return temp;
+    }
+
+    public int[][] right(int[][] matriz){
+        int [] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]][positionZero[1]+1];
+        matriz[positionZero[0]][positionZero[1]+1] = 0;
+        return matriz;
+    }
+
+    public int[][] left(int[][] matriz){
+        int [] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]][positionZero[1]-1];
+        matriz[positionZero[0]][positionZero[1]-1] = 0;
+        return matriz;
+    }
+
+
+    public int[][] up(int[][] matriz) {
+        int[] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]-1][positionZero[1]];
+        matriz[positionZero[0]-1][positionZero[1]] = 0;
+        return matriz;
+    }
+
+    public int[][] down(int[][] matriz) {
+        int[] positionZero = findZero(matriz);
+        matriz[positionZero[0]][positionZero[1]] = matriz[positionZero[0]+1][positionZero[1]];
+        matriz[positionZero[0]+1][positionZero[1]] = 0;
+        return matriz;
+    }
+
+    public void printSoluction(No no){
+        stepsForSoluction+=1;
+        if(no.getPredecessor()!= null)
+            printSoluction(no.getPredecessor());
+        wayToSolve.add(no.getOrientation());
+        System.out.println(no.getOrientation());
+        printState(no.getState());
+    }
+
+    public int distanceOfManhattam(Num[] arrayNumbers, int [][] state){
+        int total = 0;
+        for(int i =0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                int number = state[i][j];
+                total += Math.abs(i - arrayNumbers[number].getX()) + Math.abs(j - arrayNumbers[number].getY()) ;
+            }
+        }
+        return total;
+    }
+
+    public void makeCoordinates(int [][] initialState, Num[] arrayNumbers){
+        for(int i = 0; i < 3; i++){
+            for(int j =0; j <3; j++){
+                Num number = new Num(i, j, initialState[i][j]);
+                arrayNumbers[number.getValue()] = number;
+            }
+        }
+    }
+
+    public void printState(int[][] state){
+        for(int i =0; i < 3; i++){
+            for(int j =0; j < 3; j++){
+                System.out.print("["+state[i][j]+"] ");
+            }
+            System.out.println("");
+        }
+        System.out.println("\n=====================================");
+    }
+
+    /*Recebe uma Matriz e retorna as coordenadas do valor Zero*/
+    public int[] findZero(int [][] state){
+        int positionZero[] = new int [2];
+        for(int i =0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(state[i][j] == 0){
+                    positionZero[0] = i;
+                    positionZero[1] = j;
+                }
+            }
+        }
+        return positionZero;
     }
 }

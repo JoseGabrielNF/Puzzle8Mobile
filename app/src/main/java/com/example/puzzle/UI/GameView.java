@@ -10,6 +10,7 @@ import android.view.View;
 
 public class GameView extends View {
     int moves;
+    int movesToSoluction;
     private GameViewActionListener listener;
     GameBoard board;
     Context context;
@@ -23,6 +24,7 @@ public class GameView extends View {
         this.listener = listener;
         this.moves = 0;
         board = new GameBoard(context);
+        this.movesToSoluction=  board.getNMoves();
 
     }
 
@@ -55,7 +57,7 @@ public class GameView extends View {
         if (board.updateBoard(x, y))
         {
             this.moves++;
-            String text = "Movimentos: " + String.valueOf(this.moves);
+            String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
             listener.showMessage(text);
             check_game_over();
 
