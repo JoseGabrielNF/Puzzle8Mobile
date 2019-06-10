@@ -120,6 +120,11 @@ public class GameBoard {
     }
 
     public void calcSolve(){
+        wayToSolve.clear();
+        stepsForSoluction = 0;
+        for(int i =0; i < arrayNumbers.length; i++){
+            arrayNumbers[i] = null;
+        }
         initialNode.setState(initialState);
         makeCoordinates(soluction, arrayNumbers);
         findSoluction(initialNode, soluction, arrayNumbers);

@@ -25,7 +25,9 @@ public class GameView extends View {
         this.listener = listener;
         this.moves = 0;
         board = new GameBoard(context);
+        board.calcSolve();
         this.movesToSoluction=  board.getNMoves();
+        System.out.println("SOLUCAO ->"+this.movesToSoluction);
         String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
         listener.showMessage(text);
 
