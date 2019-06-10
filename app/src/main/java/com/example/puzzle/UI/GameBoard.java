@@ -179,6 +179,7 @@ public class GameBoard {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
+                    
                     changeInitialState();
 
                 }

@@ -1,9 +1,11 @@
 package com.example.puzzle.UI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,9 +53,9 @@ public class GameView extends View {
         this.moves++;
         String text = "Movimentos: " + String.valueOf(this.moves+1) + " Min: " + String.valueOf(board.stepsForSoluction);
         listener.showMessage(text);
-       
-        check_game_over();
 
+        this.postInvalidate();
+        check_game_over();
 
     }
 

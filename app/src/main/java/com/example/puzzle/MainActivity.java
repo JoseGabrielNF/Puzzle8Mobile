@@ -3,9 +3,11 @@ package com.example.puzzle;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -85,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
                             ViewGroup n_view = (ViewGroup) findViewById(R.id.game);
 
 
-                            View gameView = new GameView(MainActivity.this, null, listener);
+                            gameView = new GameView(MainActivity.this, null, listener);
+
                             n_view.addView(gameView);
 
                             break;
@@ -105,28 +108,38 @@ public class MainActivity extends AppCompatActivity {
             ViewGroup n_view = (ViewGroup) findViewById(R.id.game);
 
 
-            View gameView = new GameView(this, null, listener);
+            gameView = new GameView(this, null, listener);
             n_view.addView(gameView);
         }
     }
 
-    public void solveGame(View view){
-        View game = (GameView) gameView;
-        ((GameView) game).getSolve();
 
-        for (int i = 0; i < ((GameView) game).getStepsForSoluction(); i++) {
-            ((GameView) game).solve();
+    public void solveGame(View view) {
 
 
+        new Thread() {
+            int i =0;
+            public void run() {
+                View game = (GameView) gameView;
+                ((GameView) game).getSolve();
+                while (i++ < ((GameView) game).getStepsForSoluction()) {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            View game = (GameView) gameView;
 
-          /* try {
-                Thread.sleep(2000);
-                System.out.println("entrou sleep");
-            } catch (InterruptedException ex) {
-            }*/
-
-        }
-
+                            @Override
+                            public void run() {
+                                ((GameView) game).solve();
+                                game.invalidate();
+                            }
+                        });
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
 
