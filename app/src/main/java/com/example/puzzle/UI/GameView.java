@@ -20,13 +20,14 @@ public class GameView extends View {
     public GameView(Context context, AttributeSet attrs, GameViewActionListener listener) {
         super(context, attrs);
 
-        String text = "Faça um movimento para iniciar";
-        listener.showMessage(text);
+
         this.context = context;
         this.listener = listener;
         this.moves = 0;
         board = new GameBoard(context);
         this.movesToSoluction=  board.getNMoves();
+        String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
+        listener.showMessage(text);
 
     }
 
@@ -39,6 +40,7 @@ public class GameView extends View {
 
     public void getSolve(){
         board.calcSolve();
+        this.moves ++;
         /*Remove first element because it is null*/
         board.wayToSolve.remove(0);
         //System.out.println("REMOVIDO-> " +removido+" Tamanho do way-> "+board.wayToSolve.size());
@@ -51,7 +53,7 @@ public class GameView extends View {
         board.solve();
         board.wayToSolve.remove(0);
         this.moves++;
-        String text = "Movimentos: " + String.valueOf(this.moves+1) + " Min: " + String.valueOf(board.stepsForSoluction);
+        String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(board.stepsForSoluction);
         listener.showMessage(text);
 
         this.postInvalidate();

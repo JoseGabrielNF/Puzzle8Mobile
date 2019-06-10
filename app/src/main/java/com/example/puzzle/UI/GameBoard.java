@@ -100,6 +100,7 @@ public class GameBoard {
         }
 
 
+
     }
 
     // Modifico o initialState a cada movimento que o jogador faz para jogar na IA com o botao Resolva com a matriz atualizada
@@ -125,7 +126,7 @@ public class GameBoard {
     }
 
     public void solve(){
-        if(wayToSolve.size()== 0){
+        if(wayToSolve.size()== 0) {
             return;
         }
 
@@ -140,7 +141,6 @@ public class GameBoard {
             if(wayToSolve.get(0).equals("up")){
                 int cellNumber = cellNum(zero[1], zero[0]-1);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
-                System.out.println("cell number UP" + cellNumber + " temp" + temp );
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
@@ -151,7 +151,6 @@ public class GameBoard {
             if(wayToSolve.get(0).equals("down")){
                 int cellNumber = cellNum(zero[1], zero[0]+1);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
-                System.out.println("cell number UP" + cellNumber + " temp" + temp );
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
@@ -163,8 +162,7 @@ public class GameBoard {
             if(wayToSolve.get(0).equals("right")){
                 int cellNumber = cellNum(zero[1]+1, zero[0]);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
-                System.out.println("cell number UP" + cellNumber + " temp" + temp );
-                if (cells[temp].checkEmpty()) {
+                  if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
                     changeInitialState();
@@ -175,7 +173,7 @@ public class GameBoard {
             if(wayToSolve.get(0).equals("left")){
                 int cellNumber = cellNum(zero[1]-1, zero[0]);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
-                System.out.println("cell number UP" + cellNumber + " temp" + temp );
+
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
