@@ -30,13 +30,14 @@ public class MainActivity extends AppCompatActivity {
     //By default the first position is null.
 
     GameView.GameViewActionListener listener;
-    Button btnSolve;
+    Button btnSolve, btnNewGame;
     View gameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnSolve = (Button) findViewById(R.id.button_solve);
+        btnNewGame = (Button) findViewById(R.id.button_new);
 
         createListener();
         drawBoard();
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public void setMessage(String message) {
         if (Objects.equals(message, "create_new_game")) {
             newGame(null);
+            btnSolve.setEnabled(true);
+            btnNewGame.setEnabled(true);
             return;
         }
         TextView view = (TextView) findViewById(R.id.moves);
@@ -115,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void solveGame(View view) {
-
-
+       btnSolve.setEnabled(false);
+       btnNewGame.setEnabled(false);
         new Thread() {
             int i =0;
             public void run() {
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();
+
     }
 
 
