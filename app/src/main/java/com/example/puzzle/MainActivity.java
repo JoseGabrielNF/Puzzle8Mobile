@@ -113,14 +113,19 @@ public class MainActivity extends AppCompatActivity {
     public void solveGame(View view){
         View game = (GameView) gameView;
         ((GameView) game).getSolve();
-        int steps = ((GameView) game).getStepsForSoluction();
-        for (int i = 0; i < steps; i++) {
+
+        for (int i = 0; i < ((GameView) game).getStepsForSoluction(); i++) {
+            int vetor [] = new int[10000];
             ((GameView) game).solve();
 
-            try {
+
+
+            /*try {
                 Thread.sleep(100);
+                System.out.println("entrou sleep");
             } catch (InterruptedException ex) {
             }
+            */
         }
 
     }

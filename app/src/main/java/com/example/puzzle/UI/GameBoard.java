@@ -99,9 +99,6 @@ public class GameBoard {
             }
         }
 
-        initialNode.setState(initialState);
-        makeCoordinates(soluction, arrayNumbers);
-        findSoluction(initialNode, soluction, arrayNumbers);
 
     }
 
@@ -128,17 +125,16 @@ public class GameBoard {
     }
 
     public void solve(){
+        if(wayToSolve.size()== 0){
+            return;
+        }
 
 
         int zero [];
 
 
 
-        System.out.println("passos: "+wayToSolve.get(0));
         zero = findZero(initialState);
-            if(wayToSolve.get(0) == null){
-                return;
-            }
 
             // preciso mudar no layout
             if(wayToSolve.get(0).equals("up")){

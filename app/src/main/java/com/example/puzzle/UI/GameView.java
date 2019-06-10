@@ -39,10 +39,13 @@ public class GameView extends View {
     public void getSolve(){
         board.calcSolve();
         /*Remove first element because it is null*/
-        board.wayToSolve.remove(0);
-
+        String removido = board.wayToSolve.remove(0);
+        System.out.println("REMOVIDO-> " +removido+" Tamanho do way-> "+board.wayToSolve.size());
     }
     public void solve(){
+        if(board.wayToSolve.size() == 0) {
+            return;
+        }
         board.solve();
         board.wayToSolve.remove(0);
 
