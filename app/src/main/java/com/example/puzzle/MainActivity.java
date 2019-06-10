@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                             View gameView = new GameView(MainActivity.this, null, listener);
                             n_view.addView(gameView);
+
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:

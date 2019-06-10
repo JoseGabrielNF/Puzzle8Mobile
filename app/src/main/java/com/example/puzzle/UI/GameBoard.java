@@ -9,7 +9,6 @@ import com.example.puzzle.Model.Num;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Random;
 
 public class GameBoard {
@@ -100,6 +99,10 @@ public class GameBoard {
             }
         }
 
+        initialNode.setState(initialState);
+        makeCoordinates(soluction, arrayNumbers);
+        findSoluction(initialNode, soluction, arrayNumbers);
+
     }
 
     // Modifico o initialState a cada movimento que o jogador faz para jogar na IA com o botao Resolva com a matriz atualizada
@@ -118,19 +121,23 @@ public class GameBoard {
         return this.stepsForSoluction;
     }
 
-    public void solve(){
+    public void calcSolve(){
         initialNode.setState(initialState);
         makeCoordinates(soluction, arrayNumbers);
         findSoluction(initialNode, soluction, arrayNumbers);
+    }
+
+    public void solve(){
+
 
         int zero [];
 
-        for(int i = 1; i < wayToSolve.size(); i++){
-            System.out.println("passos: "+wayToSolve.get(i));
+
+            System.out.println("passos: "+wayToSolve.get(0));
             zero = findZero(initialState);
 
             // preciso mudar no layout
-            if(wayToSolve.get(i).equals("up")){
+            if(wayToSolve.get(0).equals("up")){
                 int cellNumber = cellNum(zero[1], zero[0]-1);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
                 System.out.println("cell number UP" + cellNumber + " temp" + temp );
@@ -141,7 +148,7 @@ public class GameBoard {
 
                 }
             }
-            if(wayToSolve.get(i).equals("down")){
+            if(wayToSolve.get(0).equals("down")){
                 int cellNumber = cellNum(zero[1], zero[0]+1);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
                 System.out.println("cell number UP" + cellNumber + " temp" + temp );
@@ -153,7 +160,7 @@ public class GameBoard {
                 }
 
             }
-            if(wayToSolve.get(i).equals("right")){
+            if(wayToSolve.get(0).equals("right")){
                 int cellNumber = cellNum(zero[1]+1, zero[0]);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
                 System.out.println("cell number UP" + cellNumber + " temp" + temp );
@@ -165,7 +172,7 @@ public class GameBoard {
                 }
 
             }
-            if(wayToSolve.get(i).equals("left")){
+            if(wayToSolve.get(0).equals("left")){
                 int cellNumber = cellNum(zero[1]-1, zero[0]);
                 int temp = Math.abs(cellNum(zero[1] , zero[0]));
                 System.out.println("cell number UP" + cellNumber + " temp" + temp );
@@ -178,18 +185,16 @@ public class GameBoard {
 
             }
 
-            try{
-                t1.sleep(500);
-            }catch (InterruptedException e ){
-                System.out.println("acordei");
-            }
-
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
 
         }
 
 
 
-    }
+        }
+
 
 
     private int cellNum(int i, int j) {
@@ -229,12 +234,11 @@ public class GameBoard {
 
         int cellNumber = cellNum(i, j);
         int temp = Math.abs(cellNum(i + 1, j));
-        System.out.println("temp " + temp + " coluna " + i + " linha " + j + " cell " + cellNumber);
+
         //Movimento para direita
         if(i!=2) {
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
-                    System.out.println("check " + cells[temp].checkEmpty());
                     cells[temp].changeState(cells[cellNumber].returnNumber());
                     cells[cellNumber].changeState(0);
                     changeInitialState();
@@ -245,7 +249,6 @@ public class GameBoard {
         //Movimento esquerda
         if(i!=0) {
             temp = Math.abs(cellNum(i - 1, j));
-            System.out.println("temp esquerda " + temp);
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
@@ -258,7 +261,6 @@ public class GameBoard {
         //Movimento para baixo
         if(j!=2) {
             temp = Math.abs(cellNum(i, j + 1));
-            System.out.println("temp baixo " + temp);
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {
                     cells[temp].changeState(cells[cellNumber].returnNumber());
@@ -271,7 +273,6 @@ public class GameBoard {
         //Movimento para cima
         if(j!=0) {
             temp = Math.abs(cellNum(i, j - 1));
-            System.out.println("temp cima " + temp);
 
             if (temp >= 0 && temp < 9) {
                 if (cells[temp].checkEmpty()) {

@@ -14,6 +14,7 @@ public class GameView extends View {
     private GameViewActionListener listener;
     GameBoard board;
     Context context;
+    private Thread t1;
 
     public GameView(Context context, AttributeSet attrs, GameViewActionListener listener) {
         super(context, attrs);
@@ -36,12 +37,23 @@ public class GameView extends View {
     }
 
     public void solve(){
-        board.solve();
+        board.calcSolve();
+        board.wayToSolve.remove(0);
+
+        System.out.println("primeira pos " + board.wayToSolve.get(0));
+
+        for (int i = 0; i < board.wayToSolve.size()-1; i++ ){
+            board.solve();
+            board.wayToSolve.remove(0);
+            this.invalidate();
+
+        }
+
     }
+
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        System.out.println("entrou on touch event");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 return true;
@@ -56,8 +68,9 @@ public class GameView extends View {
         return true;
     }
 
-    private void moveBox(float x, float y) {
-        if (board.updateBoard(x, y))
+    public void moveBox(float x, float y) {
+        solve();
+        /*if (board.updateBoard(x, y))
         {
             this.moves++;
             String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
@@ -65,7 +78,7 @@ public class GameView extends View {
             check_game_over();
 
         }
-        this.invalidate();
+        this.invalidate();*/
     }
 
     public void check_game_over()
