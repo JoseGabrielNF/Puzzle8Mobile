@@ -133,8 +133,12 @@ public class GameBoard {
         int zero [];
 
 
-            System.out.println("passos: "+wayToSolve.get(0));
-            zero = findZero(initialState);
+
+        System.out.println("passos: "+wayToSolve.get(0));
+        zero = findZero(initialState);
+            if(wayToSolve.get(0) == null){
+                return;
+            }
 
             // preciso mudar no layout
             if(wayToSolve.get(0).equals("up")){
@@ -183,11 +187,8 @@ public class GameBoard {
 
                 }
 
-            }
 
-        try{
-            Thread.sleep(500);
-        }catch (InterruptedException e){
+
 
         }
 

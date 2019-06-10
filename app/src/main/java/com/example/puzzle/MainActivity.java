@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     GameView.GameViewActionListener listener;
     Button btnSolve;
-
-
+    View gameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup view = (ViewGroup) findViewById(R.id.game);
 
 
-        View gameView = new GameView(this, null, listener);
+         gameView = new GameView(this, null, listener);
+
         view.addView(gameView);
     }
 
@@ -111,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void solveGame(View view){
+        View game = (GameView) gameView;
+        ((GameView) game).getSolve();
+        int steps = ((GameView) game).getStepsForSoluction();
+        for (int i = 0; i < steps; i++) {
+            ((GameView) game).solve();
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+            }
+        }
 
     }
 

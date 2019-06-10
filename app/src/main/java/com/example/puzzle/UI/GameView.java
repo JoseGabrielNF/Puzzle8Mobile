@@ -36,19 +36,24 @@ public class GameView extends View {
 
     }
 
-    public void solve(){
+    public void getSolve(){
         board.calcSolve();
+        /*Remove first element because it is null*/
         board.wayToSolve.remove(0);
 
-        System.out.println("primeira pos " + board.wayToSolve.get(0));
+    }
+    public void solve(){
+        board.solve();
+        board.wayToSolve.remove(0);
 
-        for (int i = 0; i < board.wayToSolve.size()-1; i++ ){
-            board.solve();
-            board.wayToSolve.remove(0);
-            this.invalidate();
+        this.invalidate();
 
-        }
 
+
+    }
+
+    public int getStepsForSoluction(){
+        return board.stepsForSoluction;
     }
 
     public boolean onTouchEvent(MotionEvent event) {
