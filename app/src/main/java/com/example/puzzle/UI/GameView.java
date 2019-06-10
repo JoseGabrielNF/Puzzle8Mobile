@@ -14,7 +14,6 @@ public class GameView extends View {
     private GameViewActionListener listener;
     GameBoard board;
     Context context;
-    private Thread t1;
 
     public GameView(Context context, AttributeSet attrs, GameViewActionListener listener) {
         super(context, attrs);
@@ -39,18 +38,21 @@ public class GameView extends View {
     public void getSolve(){
         board.calcSolve();
         /*Remove first element because it is null*/
-        String removido = board.wayToSolve.remove(0);
-        System.out.println("REMOVIDO-> " +removido+" Tamanho do way-> "+board.wayToSolve.size());
+        board.wayToSolve.remove(0);
+        //System.out.println("REMOVIDO-> " +removido+" Tamanho do way-> "+board.wayToSolve.size());
     }
+
     public void solve(){
         if(board.wayToSolve.size() == 0) {
             return;
         }
         board.solve();
         board.wayToSolve.remove(0);
-
-        this.invalidate();
-
+        this.moves++;
+        String text = "Movimentos: " + String.valueOf(this.moves+1) + " Min: " + String.valueOf(board.stepsForSoluction);
+        listener.showMessage(text);
+       
+        check_game_over();
 
 
     }
@@ -77,8 +79,7 @@ public class GameView extends View {
     }
 
     public void moveBox(float x, float y) {
-        solve();
-        /*if (board.updateBoard(x, y))
+        if (board.updateBoard(x, y))
         {
             this.moves++;
             String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
@@ -86,7 +87,7 @@ public class GameView extends View {
             check_game_over();
 
         }
-        this.invalidate();*/
+        this.invalidate();
     }
 
     public void check_game_over()
