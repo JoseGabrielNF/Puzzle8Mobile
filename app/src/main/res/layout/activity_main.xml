@@ -34,24 +34,30 @@
             android:padding="10dp"
             android:text="@string/moves_value"/>
 
-        <Button
-            android:id="@+id/button_new"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="newGame"
-            android:text="@string/button_new"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:textStyle="normal" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button_solve"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="solveGame"
-            android:text="@string/button_solve"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/button_new"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="newGame"
+                android:text="@string/button_new"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/button_solve"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="solveGame"
+                android:text="@string/button_solve"
+                android:textAllCaps="false"
+                android:textSize="20sp" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
