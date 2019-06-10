@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                                 game.invalidate();
                             }
                         });
-                        Thread.sleep(300);
+                        Thread.sleep(400);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
