@@ -55,7 +55,7 @@ public class GameView extends View {
         board.solve();
         board.wayToSolve.remove(0);
         this.moves++;
-        String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(board.stepsForSoluction);
+        String text = "Movimentos: " + String.valueOf(this.moves) + " Min: " + String.valueOf(this.movesToSoluction);
         listener.showMessage(text);
 
         this.postInvalidate();
@@ -98,7 +98,7 @@ public class GameView extends View {
 
     public void check_game_over()
     {
-        if(board.check_game_state())
+        if(board.check_game_state() && this.moves <= getStepsForSoluction())
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Parabéns! Você venceu o jogo em "+ String.valueOf(this.moves) + " movimentos")
@@ -110,7 +110,18 @@ public class GameView extends View {
                     });
             AlertDialog alert = builder.create();
             alert.show();
-        }
+        }if (board.check_game_state() && this.moves > getStepsForSoluction()){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Você Falhou! Tente fazer no máximo o número mínimo de movimentos. Boa Sorte!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        listener.showMessage("create_new_game");
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
     }
     public interface GameViewActionListener {
         void showMessage(String message);
